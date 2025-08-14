@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [currentView, setCurrentView] = useState('home');
+  const [currentView, setCurrentView] = useState('consultant');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [chatActive, setChatActive] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -331,15 +331,6 @@ function App() {
               
               <nav className="nav">
                 <button 
-                  className={`nav-btn ${currentView === 'home' ? 'active' : ''}`}
-                  onClick={() => {
-                    setCurrentView('home');
-                    closeMobilePanels();
-                  }}
-                >
-                  🏠 Главная
-                </button>
-                <button 
                   className={`nav-btn ${currentView === 'consultant' ? 'active' : ''}`}
                   onClick={() => {
                     setCurrentView('consultant');
@@ -522,9 +513,9 @@ function App() {
                     <div className="consultant-avatar">🤖</div>
                     <div className="consultant-info">
                       <h3>Робот-консультант</h3>
-                      <p>Поможем выбрать идеальный торт</p>
+                      <p>Помогу выбрать идеальный торт</p>
                     </div>
-                    <button className="close-consultant-btn" onClick={() => setCurrentView('home')}>
+                    <button className="close-consultant-btn" onClick={() => setCurrentView('catalog')}>
                       ✕
                     </button>
                   </div>
