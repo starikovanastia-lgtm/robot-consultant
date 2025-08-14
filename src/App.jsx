@@ -8,6 +8,8 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileFooterOpen, setMobileFooterOpen] = useState(false);
 
   const questions = [
     {
@@ -275,11 +277,48 @@ function App() {
     setUserAnswers({});
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+    setMobileFooterOpen(false);
+  };
+
+  const toggleMobileFooter = () => {
+    setMobileFooterOpen(!mobileFooterOpen);
+    setMobileMenuOpen(false);
+  };
+
+  const closeMobilePanels = () => {
+    setMobileMenuOpen(false);
+    setMobileFooterOpen(false);
+  };
+
   return (
     <div className="App">
+      {/* Mobile Menu Toggle Button */}
+      {!chatActive && (
+        <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+          ☰
+        </button>
+      )}
+
+      {/* Mobile Footer Toggle Button */}
+      {!chatActive && (
+        <button className="mobile-footer-toggle" onClick={toggleMobileFooter}>
+          ℹ️
+        </button>
+      )}
+
+      {/* Mobile Overlay */}
+      {!chatActive && (
+        <div 
+          className={`mobile-overlay ${mobileMenuOpen || mobileFooterOpen ? 'active' : ''}`}
+          onClick={closeMobilePanels}
+        />
+      )}
+
       {/* Header - показываем только если чат не активен */}
       {!chatActive && (
-        <header className="header">
+        <header className={`header ${mobileMenuOpen ? 'active' : ''}`}>
           <div className="container">
             <div className="header-content">
               <div className="logo">
@@ -293,13 +332,19 @@ function App() {
               <nav className="nav">
                 <button 
                   className={`nav-btn ${currentView === 'home' ? 'active' : ''}`}
-                  onClick={() => setCurrentView('home')}
+                  onClick={() => {
+                    setCurrentView('home');
+                    closeMobilePanels();
+                  }}
                 >
                   🏠 Главная
                 </button>
                 <button 
                   className={`nav-btn ${currentView === 'consultant' ? 'active' : ''}`}
-                  onClick={() => setCurrentView('consultant')}
+                  onClick={() => {
+                    setCurrentView('consultant');
+                    closeMobilePanels();
+                  }}
                 >
                   🤖 Консультант
                 </button>
@@ -512,7 +557,7 @@ function App() {
           )}
 
           {/* Footer */}
-          <footer className="footer">
+          <footer className={`footer ${mobileFooterOpen ? 'active' : ''}`}>
             <div className="container">
               <div className="footer-content">
                 <div className="footer-section">
