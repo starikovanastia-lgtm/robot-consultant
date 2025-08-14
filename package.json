@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://nastiastarikova.github.io/robot-consultant",
+  "homepage": "https://starikovanastia-lgtm.github.io/robot-consultant",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

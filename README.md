@@ -28,7 +28,7 @@
 
 ## 🌐 Демо
 
-[Открыть робота-консультанта](https://nastiastarikova.github.io/robot-consultant)
+[Открыть робота-консультанта](https://starikovanastia-lgtm.github.io/robot-consultant)
 
 ## 📦 Установка и запуск
 
