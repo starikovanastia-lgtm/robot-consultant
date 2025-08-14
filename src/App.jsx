@@ -256,15 +256,40 @@ function App() {
       }
     }
 
-    // Если после фильтрации тортов мало, добавляем популярные
+    // Если после фильтрации тортов мало, добавляем популярные в рамках бюджета
     if (filteredCakes.length < 3) {
-      const popularCakes = cakes.filter(cake => cake.popular && !filteredCakes.find(fc => fc.id === cake.id));
+      const budgetFilter = userAnswers.budget ? {
+        'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
+        '1000-1500 ₽': price => {
+          const priceNum = parseInt(price.match(/\d+/)[0]);
+          return priceNum >= 1000 && priceNum <= 1500;
+        },
+        'От 1500 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1500
+      }[userAnswers.budget] : () => true;
+
+      const popularCakes = cakes.filter(cake => 
+        cake.popular && 
+        !filteredCakes.find(fc => fc.id === cake.id) &&
+        budgetFilter(cake.price)
+      );
       filteredCakes = [...filteredCakes, ...popularCakes];
     }
 
     // Если все еще мало тортов, добавляем любые подходящие по бюджету
     if (filteredCakes.length < 3) {
-      const remainingCakes = cakes.filter(cake => !filteredCakes.find(fc => fc.id === cake.id));
+      const budgetFilter = userAnswers.budget ? {
+        'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
+        '1000-1500 ₽': price => {
+          const priceNum = parseInt(price.match(/\d+/)[0]);
+          return priceNum >= 1000 && priceNum <= 1500;
+        },
+        'От 1500 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1500
+      }[userAnswers.budget] : () => true;
+
+      const remainingCakes = cakes.filter(cake => 
+        !filteredCakes.find(fc => fc.id === cake.id) &&
+        budgetFilter(cake.price)
+      );
       filteredCakes = [...filteredCakes, ...remainingCakes];
     }
 
