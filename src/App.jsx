@@ -31,7 +31,7 @@ function App() {
     {
       id: 'budget',
       text: 'Какой у вас бюджет?',
-      options: ['До 1000 ₽', '1000-1500 ₽', 'От 1500 ₽']
+      options: ['До 1000 ₽', 'От 1000 ₽']
     },
     {
       id: 'preference',
@@ -230,11 +230,7 @@ function App() {
     if (userAnswers.budget) {
       const budgetMap = {
         'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
-        '1000-1500 ₽': price => {
-          const priceNum = parseInt(price.match(/\d+/)[0]);
-          return priceNum >= 1000 && priceNum <= 1500;
-        },
-        'От 1500 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1500
+        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) > 1000
       };
       const budgetFilter = budgetMap[userAnswers.budget];
       if (budgetFilter) {
@@ -260,11 +256,7 @@ function App() {
     if (filteredCakes.length < 3) {
       const budgetFilter = userAnswers.budget ? {
         'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
-        '1000-1500 ₽': price => {
-          const priceNum = parseInt(price.match(/\d+/)[0]);
-          return priceNum >= 1000 && priceNum <= 1500;
-        },
-        'От 1500 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1500
+        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) > 1000
       }[userAnswers.budget] : () => true;
 
       const popularCakes = cakes.filter(cake => 
@@ -279,11 +271,7 @@ function App() {
     if (filteredCakes.length < 3) {
       const budgetFilter = userAnswers.budget ? {
         'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
-        '1000-1500 ₽': price => {
-          const priceNum = parseInt(price.match(/\d+/)[0]);
-          return priceNum >= 1000 && priceNum <= 1500;
-        },
-        'От 1500 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1500
+        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) > 1000
       }[userAnswers.budget] : () => true;
 
       const remainingCakes = cakes.filter(cake => 
