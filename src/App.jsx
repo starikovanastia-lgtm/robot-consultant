@@ -253,266 +253,263 @@ function App() {
 
   return (
     <div className="App">
-      {/* Header */}
-      <header className="header">
-        <div className="container">
-          <div className="header-content">
-            <div className="logo">
-              <div className="logo-icon">🍰</div>
-              <div className="logo-text">
-                <h1>Фабрика тортов</h1>
-                <p>Свежие торты на заказ</p>
-              </div>
-            </div>
-            
-            <nav className="nav">
-              <button 
-                className={`nav-btn ${currentView === 'home' ? 'active' : ''}`}
-                onClick={() => setCurrentView('home')}
-              >
-                🏠 Главная
-              </button>
-              <button 
-                className={`nav-btn ${currentView === 'consultant' ? 'active' : ''}`}
-                onClick={() => setCurrentView('consultant')}
-              >
-                🤖 Консультант
-              </button>
-              <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer" className="nav-btn">
-                🌐 Сайт
-              </a>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      {currentView === 'home' && (
-        <section className="hero">
+      {/* Header - показываем только если чат не активен */}
+      {!chatActive && (
+        <header className="header">
           <div className="container">
-            <div className="hero-content">
-              <h1>Добро пожаловать в Фабрику тортов!</h1>
-              <p>Создаем вкусные торты для ваших особенных моментов</p>
-              <div className="hero-buttons">
-                <button className="btn btn-primary" onClick={() => setCurrentView('consultant')}>
-                  🤖 Получить консультацию
-                </button>
+            <div className="header-content">
+              <div className="logo">
+                <div className="logo-icon">🍰</div>
+                <div className="logo-text">
+                  <h1>Фабрика тортов</h1>
+                  <p>Свежие торты на заказ</p>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Catalog */}
-      {currentView === 'catalog' && (
-        <main className="catalog">
-          <div className="container">
-            <div className="catalog-header">
-              <h2>🍰 Каталог тортов</h2>
-              <p>Выберите идеальный торт для вашего праздника</p>
-            </div>
-
-            {/* Categories */}
-            <div className="categories">
-              {categories.map(category => (
-                <button
-                  key={category.id}
-                  className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(category.id)}
+              
+              <nav className="nav">
+                <button 
+                  className={`nav-btn ${currentView === 'home' ? 'active' : ''}`}
+                  onClick={() => setCurrentView('home')}
                 >
-                  <span className="category-icon">{category.icon}</span>
-                  <span className="category-name">{category.name}</span>
+                  🏠 Главная
                 </button>
-              ))}
-            </div>
-
-            {/* Cakes Grid */}
-            <div className="cakes-grid">
-              {filteredCakes.map(cake => (
-                <div key={cake.id} className="cake-card" onClick={() => handleCakeClick(cake.url)}>
-                  {cake.popular && <div className="popular-badge">🔥 Популярный</div>}
-                  {cake.discount && <div className="discount-badge">-{cake.discount}%</div>}
-                  
-                  <div className="cake-image">
-                    <span className="cake-emoji">{cake.image}</span>
-                  </div>
-                  
-                  <div className="cake-content">
-                    <h3 className="cake-name">{cake.name}</h3>
-                    <p className="cake-description">{cake.description}</p>
-                    
-                    <div className="cake-details">
-                      <span className="cake-weight">{cake.weight}</span>
-                      <div className="cake-price-container">
-                        {cake.oldPrice && (
-                          <span className="cake-old-price">{cake.oldPrice}</span>
-                        )}
-                        <span className="cake-price">{cake.price}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="cake-category">
-                      {categories.find(cat => cat.id === cake.category)?.name}
-                    </div>
-                  </div>
-                  
-                  <div className="cake-actions">
-                    <button className="btn btn-primary btn-small">
-                      Заказать
-                    </button>
-                  </div>
-                </div>
-              ))}
+                <button 
+                  className={`nav-btn ${currentView === 'consultant' ? 'active' : ''}`}
+                  onClick={() => setCurrentView('consultant')}
+                >
+                  🤖 Консультант
+                </button>
+                <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer" className="nav-btn">
+                  🌐 Сайт
+                </a>
+              </nav>
             </div>
           </div>
-        </main>
+        </header>
       )}
 
-      {/* Consultant */}
-      {currentView === 'consultant' && (
-        <main className="consultant">
-          <div className="container">
-            {!chatActive ? (
-              <div className="consultant-content">
-                <div className="consultant-header">
-                  <h2>🤖 Робот-консультант</h2>
-                  <p>Поможем выбрать идеальный торт для вашего праздника</p>
+      {/* Если чат активен, показываем только интерфейс консультанта */}
+      {chatActive ? (
+        <div className="chat-fullscreen">
+          <div className="chat-container">
+            <div className="chat-interface">
+              <div className="chat-header">
+                <div className="bot-avatar">🤖</div>
+                <div className="bot-info">
+                  <h3>Робот-консультант</h3>
+                  <p>Помогу выбрать идеальный торт</p>
                 </div>
-                
-                <div className="consultant-card">
-                  <div className="consultant-avatar">🤖</div>
-                  <div className="consultant-info">
-                    <h3>Робот-консультант Фабрики тортов</h3>
-                    <p>Онлайн • Готов помочь</p>
-                  </div>
-                  <button className="btn btn-primary" onClick={startConsultation}>
-                    Начать консультацию
-                  </button>
-                </div>
-                
-                <div className="consultant-features">
-                  <div className="feature">
-                    <span className="feature-icon">🎯</span>
-                    <h4>Персональный подбор</h4>
-                    <p>Учитываем ваши предпочтения и бюджет</p>
-                  </div>
-                  <div className="feature">
-                    <span className="feature-icon">⚡</span>
-                    <h4>Быстрые ответы</h4>
-                    <p>Получите рекомендации за несколько кликов</p>
-                  </div>
-                  <div className="feature">
-                    <span className="feature-icon">🎉</span>
-                    <h4>Для любого случая</h4>
-                    <p>От дней рождения до корпоративов</p>
-                  </div>
-                </div>
+                <button className="close-chat-btn" onClick={resetChat}>
+                  ✕
+                </button>
               </div>
-            ) : (
-              <div className="chat-container">
-                <div className="chat-interface">
-                  <div className="chat-header">
-                    <div className="bot-avatar">🤖</div>
-                    <div className="bot-info">
-                      <h3>Робот-консультант Фабрики тортов</h3>
-                      <p>Онлайн</p>
+              <div className="chat-messages">
+                {messages.map((message, index) => (
+                  <div key={index} className={`message ${message.type}`}>
+                    <div className="message-avatar">
+                      {message.type === 'bot' ? '🤖' : '👤'}
                     </div>
-                    <button className="btn btn-secondary btn-small" onClick={resetChat}>
-                      🔄 Начать заново
-                    </button>
-                  </div>
-                  
-                  <div className="chat-messages">
-                    {messages.map((message, index) => (
-                      <div key={index} className={`message ${message.type === 'user' ? 'user' : ''}`}>
-                        <div className="message-avatar">
-                          {message.type === 'user' ? '👤' : '🤖'}
+                    <div className="message-bubble">
+                      <p>{message.text}</p>
+                      {message.options && (
+                        <div className="quick-replies">
+                          {message.options.map((option, optionIndex) => (
+                            <button
+                              key={optionIndex}
+                              className="quick-reply-btn"
+                              onClick={() => handleOptionClick(option)}
+                            >
+                              {option}
+                            </button>
+                          ))}
                         </div>
-                        <div className="message-bubble">
-                          <p>{message.text}</p>
-                          
-                          {message.options && (
-                            <div className="quick-replies">
-                              {message.options.map((option, optIndex) => (
-                                <button
-                                  key={optIndex}
-                                  className="quick-reply-btn"
-                                  onClick={() => handleOptionClick(option)}
-                                >
-                                  {option}
-                                </button>
-                              ))}
-                            </div>
-                          )}
-
-                          {message.recommendations && (
-                            <div className="recommendations">
-                              <div className="recommendations-header">
-                                <h4>🎯 Ваши персональные рекомендации:</h4>
-                              </div>
-                              <div className="recommendations-grid">
-                                {message.recommendations.map((cake, cakeIndex) => (
-                                  <div key={cakeIndex} className="cake-card" onClick={() => handleCakeClick(cake.url)}>
-                                    <div className="cake-card-image">{cake.image}</div>
-                                    <div className="cake-card-content">
-                                      <h4>{cake.name}</h4>
-                                      <p>{cake.description}</p>
-                                      <div className="cake-card-details">
-                                        <span className="cake-weight">{cake.weight}</span>
-                                        <span className="cake-price">{cake.price}</span>
-                                      </div>
-                                      <div className="cake-category">{cake.category}</div>
-                                    </div>
-                                    <div className="cake-card-link">
-                                      <span>🔗</span>
-                                    </div>
+                      )}
+                      {message.recommendations && (
+                        <div className="recommendations">
+                          <div className="recommendations-header">
+                            <h4>Рекомендуемые торты:</h4>
+                          </div>
+                          <div className="recommendations-grid">
+                            {message.recommendations.map((cake) => (
+                              <div key={cake.id} className="cake-card" onClick={() => handleCakeClick(cake.url)}>
+                                <div className="cake-card-image">
+                                  {cake.image}
+                                </div>
+                                <div className="cake-card-content">
+                                  <h4>{cake.name}</h4>
+                                  <p>{cake.description}</p>
+                                  <div className="cake-card-details">
+                                    <span className="cake-weight">{cake.weight}</span>
+                                    <span className="cake-price">{cake.price}</span>
                                   </div>
-                                ))}
+                                </div>
+                                <div className="cake-card-link">🔗</div>
                               </div>
-                              <div className="recommendations-footer">
-                                <p>💡 Нажмите на любой торт, чтобы перейти на официальный сайт и заказать!</p>
-                                <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                                  🌐 Перейти на сайт Фабрики тортов
-                                </a>
-                              </div>
-                            </div>
-                          )}
+                            ))}
+                          </div>
+                          <div className="recommendations-footer">
+                            <p>Нажмите на карточку торта, чтобы перейти на сайт и заказать</p>
+                            <button className="btn btn-primary btn-small" onClick={resetChat}>
+                              🍰 Начать заново
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      )}
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            )}
-          </div>
-        </main>
-      )}
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
-              <h4>🍰 Фабрика тортов</h4>
-              <p>Создаем вкусные торты для ваших особенных моментов</p>
             </div>
-            <div className="footer-section">
-              <h4>📞 Контакты</h4>
-              <p>Телефон: +7 (XXX) XXX-XX-XX</p>
-              <p>Email: info@fabrikatortov.com</p>
-            </div>
-            <div className="footer-section">
-              <h4>🔗 Ссылки</h4>
-              <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer">
-                Официальный сайт
-              </a>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; 2024 Фабрика тортов. Все права защищены.</p>
           </div>
         </div>
-      </footer>
+      ) : (
+        <>
+          {/* Hero Section */}
+          {currentView === 'home' && (
+            <section className="hero">
+              <div className="container">
+                <div className="hero-content">
+                  <h1>Добро пожаловать в Фабрику тортов!</h1>
+                  <p>Создаем вкусные торты для ваших особенных моментов</p>
+                  <div className="hero-buttons">
+                    <button className="btn btn-primary" onClick={() => setCurrentView('consultant')}>
+                      🤖 Получить консультацию
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Catalog */}
+          {currentView === 'catalog' && (
+            <section className="catalog">
+              <div className="container">
+                <div className="catalog-header">
+                  <h2>Наши торты</h2>
+                  <p>Выберите идеальный торт для вашего праздника</p>
+                </div>
+                
+                <div className="categories">
+                  {categories.map((category) => (
+                    <button
+                      key={category.id}
+                      className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
+                      onClick={() => setSelectedCategory(category.id)}
+                    >
+                      <span className="category-icon">{category.icon}</span>
+                      <span className="category-name">{category.name}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="cakes-grid">
+                  {filteredCakes.map((cake) => (
+                    <div key={cake.id} className="cake-card" onClick={() => handleCakeClick(cake.url)}>
+                      {cake.popular && <div className="popular-badge">Популярный</div>}
+                      {cake.discount && <div className="discount-badge">-{cake.discount}%</div>}
+                      <div className="cake-image">
+                        <div className="cake-emoji">{cake.image}</div>
+                      </div>
+                      <div className="cake-content">
+                        <h3 className="cake-name">{cake.name}</h3>
+                        <p className="cake-description">{cake.description}</p>
+                        <div className="cake-details">
+                          <span className="cake-weight">{cake.weight}</span>
+                          <div className="cake-price-container">
+                            {cake.oldPrice && <span className="cake-old-price">{cake.oldPrice}</span>}
+                            <span className="cake-price">{cake.price}</span>
+                          </div>
+                        </div>
+                        <div className="cake-category">
+                          {categories.find(cat => cat.id === cake.category)?.name}
+                        </div>
+                      </div>
+                      <div className="cake-actions">
+                        <button className="btn btn-primary btn-small">
+                          Заказать
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Consultant */}
+          {currentView === 'consultant' && (
+            <section className="consultant">
+              <div className="container">
+                <div className="consultant-content">
+                  <div className="consultant-header">
+                    <h2>Робот-консультант</h2>
+                    <p>Поможем выбрать идеальный торт для вашего праздника</p>
+                  </div>
+                  
+                  <div className="consultant-card">
+                    <div className="consultant-avatar">🤖</div>
+                    <div className="consultant-info">
+                      <h3>Умный помощник</h3>
+                      <p>Задайте несколько вопросов, и я подберу для вас идеальный торт</p>
+                    </div>
+                    <button className="btn btn-primary" onClick={startConsultation}>
+                      🚀 Начать консультацию
+                    </button>
+                  </div>
+
+                  <div className="consultant-features">
+                    <div className="feature">
+                      <span className="feature-icon">🎯</span>
+                      <h4>Точный подбор</h4>
+                      <p>Учитываем все ваши предпочтения и бюджет</p>
+                    </div>
+                    <div className="feature">
+                      <span className="feature-icon">⚡</span>
+                      <h4>Быстро</h4>
+                      <p>Получите рекомендации за 2-3 минуты</p>
+                    </div>
+                    <div className="feature">
+                      <span className="feature-icon">💡</span>
+                      <h4>Умные советы</h4>
+                      <p>Поможем с выбором размера и оформления</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Footer */}
+          <footer className="footer">
+            <div className="container">
+              <div className="footer-content">
+                <div className="footer-section">
+                  <h4>Контакты</h4>
+                  <p>📞 +7 (XXX) XXX-XX-XX</p>
+                  <p>📧 info@fabrikatortov.com</p>
+                  <p>📍 Москва, ул. Примерная, 123</p>
+                </div>
+                <div className="footer-section">
+                  <h4>Режим работы</h4>
+                  <p>🕐 Пн-Пт: 9:00 - 20:00</p>
+                  <p>🕐 Сб-Вс: 10:00 - 18:00</p>
+                  <p>🚚 Доставка по городу</p>
+                </div>
+                <div className="footer-section">
+                  <h4>Полезные ссылки</h4>
+                  <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer">🌐 Основной сайт</a>
+                  <p>📋 Условия заказа</p>
+                  <p>🔒 Политика конфиденциальности</p>
+                </div>
+              </div>
+              <div className="footer-bottom">
+                <p>&copy; 2024 Фабрика тортов. Все права защищены.</p>
+              </div>
+            </div>
+          </footer>
+        </>
+      )}
     </div>
   );
 }
