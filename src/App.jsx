@@ -171,7 +171,7 @@ function App() {
       description: 'Нежный творожный торт с ягодами',
       price: '699.00 ₽',
       weight: '1.0 кг',
-      category: 'cheesecake',
+      category: 'classic',
       url: 'https://fabrikatortov.com/o/5c4a4a/',
       image: '🧀'
     },
@@ -191,7 +191,7 @@ function App() {
       description: 'Уникальный торт с необычными вкусами',
       price: '1199.00 ₽',
       weight: '1.3 кг',
-      category: 'fruit',
+      category: 'classic',
       url: 'https://fabrikatortov.com/o/55de16/',
       image: '🧪'
     },
@@ -201,7 +201,7 @@ function App() {
       description: 'Мороженое в виде торта',
       price: '799.00 ₽',
       weight: '1.0 кг',
-      category: 'mousse',
+      category: 'classic',
       url: 'https://fabrikatortov.com/o/5c4a20/',
       image: '🍦'
     }
