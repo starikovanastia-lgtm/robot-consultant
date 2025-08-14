@@ -298,12 +298,73 @@ function App() {
       }
     }
 
+    // Фильтрация по размеру (если указан)
+    if (userAnswers.size) {
+      const sizeMap = {
+        'Маленький (до 1 кг)': weight => parseFloat(weight.match(/\d+\.?\d*/)[0]) <= 1.0,
+        'Средний (1-1.5 кг)': weight => {
+          const w = parseFloat(weight.match(/\d+\.?\d*/)[0]);
+          return w >= 1.0 && w <= 1.5;
+        },
+        'Большой (от 1.5 кг)': weight => parseFloat(weight.match(/\d+\.?\d*/)[0]) >= 1.5
+      };
+      const sizeFilter = sizeMap[userAnswers.size];
+      if (sizeFilter) {
+        const sizeCakes = filteredCakes.filter(cake => sizeFilter(cake.weight));
+        // Если есть торты подходящего размера, используем их
+        if (sizeCakes.length > 0) {
+          filteredCakes = sizeCakes;
+        }
+        // Если нет, оставляем все подходящие по бюджету
+      }
+    }
+
+    // Фильтрация по случаю (если указан)
+    if (userAnswers.occasion) {
+      const occasionMap = {
+        '🎉 День рождения': cake => cake.category === 'chocolate' || cake.category === 'mousse', // Яркие и праздничные
+        '💒 Свадьба': cake => cake.category === 'classic' || cake.category === 'honey', // Элегантные и традиционные
+        '🎊 Юбилей': cake => cake.category === 'classic' || cake.category === 'chocolate', // Солидные и красивые
+        '💕 Романтический ужин': cake => cake.category === 'fruit' || cake.category === 'mousse', // Нежные и романтичные
+        '👔 Корпоратив': cake => cake.category === 'classic' || cake.category === 'cheesecake', // Универсальные
+        '👨‍👩‍👧‍👦 Семейный праздник': cake => cake.category === 'classic' || cake.category === 'fruit', // Для всех
+        '☕ Чаепитие': cake => cake.category === 'honey' || cake.category === 'classic' // Традиционные
+      };
+      const occasionFilter = occasionMap[userAnswers.occasion];
+      if (occasionFilter) {
+        const occasionCakes = filteredCakes.filter(occasionFilter);
+        // Если есть торты подходящие для случая, используем их
+        if (occasionCakes.length > 0) {
+          filteredCakes = occasionCakes;
+        }
+        // Если нет, оставляем предыдущие фильтры
+      }
+    }
+
+    // Фильтрация по уровню сладости (если указан)
+    if (userAnswers.sweetness) {
+      const sweetnessMap = {
+        'Не очень сладкий': cake => cake.category === 'cheesecake' || cake.category === 'classic', // Менее сладкие
+        'Умеренно сладкий': cake => cake.category === 'honey' || cake.category === 'fruit', // Средняя сладость
+        'Очень сладкий': cake => cake.category === 'chocolate' || cake.category === 'mousse' // Очень сладкие
+      };
+      const sweetnessFilter = sweetnessMap[userAnswers.sweetness];
+      if (sweetnessFilter) {
+        const sweetnessCakes = filteredCakes.filter(sweetnessFilter);
+        // Если есть торты подходящей сладости, используем их
+        if (sweetnessCakes.length > 0) {
+          filteredCakes = sweetnessCakes;
+        }
+        // Если нет, оставляем предыдущие фильтры
+      }
+    }
+
     // Фильтрация по предпочтениям
     if (userAnswers.preference) {
       const preferenceMap = {
         'Шоколад': cake => cake.category === 'chocolate',
         'Мед': cake => cake.category === 'honey',
-        'Крем': cake => cake.category === 'classic',
+        'Крем': cake => cake.category === 'classic' || cake.category === 'fruit', // Добавляем фруктовые к крему
         'Мусс': cake => cake.category === 'mousse'
       };
       const preferenceFilter = preferenceMap[userAnswers.preference];
@@ -329,7 +390,10 @@ function App() {
         !filteredCakes.find(fc => fc.id === cake.id) &&
         budgetFilter(cake.price)
       );
-      filteredCakes = [...filteredCakes, ...popularCakes];
+      
+      // Добавляем только нужное количество тортов до 3
+      const neededCount = 3 - filteredCakes.length;
+      filteredCakes = [...filteredCakes, ...popularCakes.slice(0, neededCount)];
     }
 
     // Если все еще мало тортов, добавляем любые подходящие по бюджету
@@ -343,7 +407,10 @@ function App() {
         !filteredCakes.find(fc => fc.id === cake.id) &&
         budgetFilter(cake.price)
       );
-      filteredCakes = [...filteredCakes, ...remainingCakes];
+      
+      // Добавляем только нужное количество тортов до 3
+      const neededCount = 3 - filteredCakes.length;
+      filteredCakes = [...filteredCakes, ...remainingCakes.slice(0, neededCount)];
     }
 
     // Сортируем: сначала по предпочтениям, потом по популярности, потом по цене
@@ -351,6 +418,10 @@ function App() {
       // Приоритет популярным тортам
       if (a.popular && !b.popular) return -1;
       if (!a.popular && b.popular) return 1;
+      
+      // Приоритет тортам с скидкой
+      if (a.discount && !b.discount) return -1;
+      if (!a.discount && b.discount) return 1;
       
       // Приоритет более дешевым тортам
       const priceA = parseInt(a.price.match(/\d+/)[0]);
@@ -411,12 +482,12 @@ function App() {
       {/* Header - показываем только если чат не активен */}
       {!chatActive && (
         <header className={`header ${mobileMenuOpen ? 'active' : ''}`}>
-          <div className="container">
-            <div className="header-content">
-              <div className="logo">
-                <div className="logo-icon">🍰</div>
-                <div className="logo-text">
-                  <h1>Фабрика тортов</h1>
+        <div className="container">
+          <div className="header-content">
+            <div className="logo">
+              <div className="logo-icon">🍰</div>
+              <div className="logo-text">
+                <h1>Фабрика тортов</h1>
                   <p>Свежие торты на заказ</p>
                 </div>
               </div>
@@ -435,19 +506,19 @@ function App() {
                   🌐 Сайт
                 </a>
               </nav>
-            </div>
           </div>
-        </header>
+        </div>
+      </header>
       )}
-
+      
       {/* Если чат активен, показываем только интерфейс консультанта */}
       {chatActive ? (
         <div className="chat-fullscreen">
-          <div className="chat-container">
-            <div className="chat-interface">
-              <div className="chat-header">
-                <div className="bot-avatar">🤖</div>
-                <div className="bot-info">
+        <div className="chat-container">
+          <div className="chat-interface">
+            <div className="chat-header">
+              <div className="bot-avatar">🤖</div>
+              <div className="bot-info">
                   <h3>Робот-консультант</h3>
                   <p>Помогу выбрать идеальный торт</p>
                 </div>
@@ -455,31 +526,31 @@ function App() {
                   ✕
                 </button>
               </div>
-              <div className="chat-messages">
-                {messages.map((message, index) => (
+            <div className="chat-messages">
+              {messages.map((message, index) => (
                   <div key={index} className={`message ${message.type}`}>
-                    <div className="message-avatar">
+                  <div className="message-avatar">
                       {message.type === 'bot' ? '🤖' : '👤'}
-                    </div>
-                    <div className="message-bubble">
-                      <p>{message.text}</p>
-                      {message.options && (
-                        <div className="quick-replies">
+                  </div>
+                  <div className="message-bubble">
+                    <p>{message.text}</p>
+                    {message.options && (
+                      <div className="quick-replies">
                           {message.options.map((option, optionIndex) => (
-                            <button
+                          <button
                               key={optionIndex}
                               className={`quick-reply-btn ${selectedOption === option ? 'selected' : ''} ${selectedOption !== null && selectedOption !== option ? 'disabled' : ''}`}
-                              onClick={() => handleOptionClick(option)}
+                            onClick={() => handleOptionClick(option)}
                               disabled={selectedOption !== null}
-                            >
-                              {option}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                      {message.recommendations && (
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {message.recommendations && (
                         <div className="recommendations">
-                          <div className="recommendations-header">
+                        <div className="recommendations-header">
                             <h4>Рекомендуемые торты:</h4>
                           </div>
                           <div className="recommendations-grid">
@@ -503,24 +574,24 @@ function App() {
                                   >
                                     🛒 Заказать на сайте
                                   </a>
-                                </div>
+                        </div>
                               </div>
                             ))}
-                          </div>
-                          <div className="recommendations-footer">
+                            </div>
+                        <div className="recommendations-footer">
                             <p>Нажмите на ссылку, чтобы перейти на сайт и заказать торт</p>
                             <button className="btn btn-primary btn-small" onClick={resetChat}>
                               🍰 Начать заново
                             </button>
-                          </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
         </div>
       ) : (
         <>
