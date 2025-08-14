@@ -144,6 +144,66 @@ function App() {
       category: 'mousse',
       url: 'https://fabrikatortov.com/o/5c4a20/',
       image: '🍓'
+    },
+    {
+      id: 10,
+      name: 'Торт "ДЕНЬ И НОЧЬ"',
+      description: 'Шоколадный торт с контрастным дизайном',
+      price: '799.00 ₽',
+      weight: '1.0 кг',
+      category: 'chocolate',
+      url: 'https://fabrikatortov.com/o/5c4a68/',
+      image: '🌙'
+    },
+    {
+      id: 11,
+      name: 'Торт "БРАУНШВЕЙГСКИЙ"',
+      description: 'Классический немецкий торт с орехами',
+      price: '899.00 ₽',
+      weight: '1.2 кг',
+      category: 'classic',
+      url: 'https://fabrikatortov.com/o/5c4a74/',
+      image: '🥜'
+    },
+    {
+      id: 12,
+      name: 'Торт "ТВОРОЖНЫЙ"',
+      description: 'Нежный творожный торт с ягодами',
+      price: '699.00 ₽',
+      weight: '1.0 кг',
+      category: 'cheesecake',
+      url: 'https://fabrikatortov.com/o/5c4a4a/',
+      image: '🧀'
+    },
+    {
+      id: 13,
+      name: 'Торт "ДЕНЬ И НОЧЬ БОЛЬШОЙ"',
+      description: 'Большой шоколадный торт для компании',
+      price: '1299.00 ₽',
+      weight: '1.8 кг',
+      category: 'chocolate',
+      url: 'https://fabrikatortov.com/o/99184e/',
+      image: '🌙'
+    },
+    {
+      id: 14,
+      name: 'Торт "ЭКСПЕРИМЕНТ"',
+      description: 'Уникальный торт с необычными вкусами',
+      price: '1199.00 ₽',
+      weight: '1.3 кг',
+      category: 'fruit',
+      url: 'https://fabrikatortov.com/o/55de16/',
+      image: '🧪'
+    },
+    {
+      id: 15,
+      name: 'Торт "ПЛОМБИР"',
+      description: 'Мороженое в виде торта',
+      price: '799.00 ₽',
+      weight: '1.0 кг',
+      category: 'mousse',
+      url: 'https://fabrikatortov.com/o/5c4a20/',
+      image: '🍦'
     }
   ];
 
