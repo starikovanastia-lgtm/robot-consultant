@@ -141,36 +141,6 @@ function App() {
       category: 'mousse',
       url: 'https://fabrikatortov.com/o/5c4a20/',
       image: '🍓'
-    },
-    {
-      id: 10,
-      name: 'Торт "ПРАЖСКИЙ"',
-      description: 'Классический шоколадный торт с шоколадным кремом',
-      price: '799.00 ₽',
-      weight: '1.0 кг',
-      category: 'chocolate',
-      url: 'https://fabrikatortov.com/o/example1/',
-      image: '🍫'
-    },
-    {
-      id: 11,
-      name: 'Торт "КРАСНЫЙ БАРХАТ"',
-      description: 'Яркий красный торт с крем-чизом',
-      price: '1299.00 ₽',
-      weight: '1.3 кг',
-      category: 'classic',
-      url: 'https://fabrikatortov.com/o/example2/',
-      image: '❤️'
-    },
-    {
-      id: 12,
-      name: 'Торт "ТИРАМИСУ"',
-      description: 'Итальянский десерт с кофе и маскарпоне',
-      price: '1199.00 ₽',
-      weight: '1.2 кг',
-      category: 'classic',
-      url: 'https://fabrikatortov.com/o/example3/',
-      image: '☕'
     }
   ];
 
