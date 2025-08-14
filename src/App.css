@@ -826,6 +826,27 @@ body {
   box-shadow: 0 4px 12px rgba(212, 165, 165, 0.15);
 }
 
+.quick-reply-btn.selected {
+  background: #D4A5A5;
+  border-color: #D4A5A5;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 165, 165, 0.3);
+}
+
+.quick-reply-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.quick-reply-btn.disabled:hover {
+  border-color: #FCE4E6;
+  color: #D4A5A5;
+  transform: none;
+  box-shadow: none;
+}
+
 /* Recommendations */
 .recommendations {
   margin-top: 20px;

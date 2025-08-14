@@ -10,6 +10,7 @@ function App() {
   const [userAnswers, setUserAnswers] = useState({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileFooterOpen, setMobileFooterOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const questions = [
     {
@@ -172,6 +173,14 @@ function App() {
   };
 
   const handleOptionClick = (option) => {
+    // Если уже выбран вариант, блокируем повторные нажатия
+    if (selectedOption !== null) {
+      return;
+    }
+
+    // Устанавливаем выбранный вариант
+    setSelectedOption(option);
+
     const currentQuestion = questions[currentQuestionIndex];
     
     // Сохраняем ответ пользователя
@@ -195,6 +204,8 @@ function App() {
         };
         setMessages(prev => [...prev, botResponse]);
         setCurrentQuestionIndex(prev => prev + 1);
+        // Сбрасываем выбранный вариант для следующего вопроса
+        setSelectedOption(null);
       }, 1000);
     } else {
       // Показываем рекомендации
@@ -206,6 +217,8 @@ function App() {
           recommendations: recommendations
         };
         setMessages(prev => [...prev, botResponse]);
+        // Сбрасываем выбранный вариант
+        setSelectedOption(null);
       }, 1000);
     }
   };
@@ -275,6 +288,7 @@ function App() {
     setMessages([]);
     setCurrentQuestionIndex(0);
     setUserAnswers({});
+    setSelectedOption(null);
   };
 
   const toggleMobileMenu = () => {
@@ -376,8 +390,9 @@ function App() {
                           {message.options.map((option, optionIndex) => (
                             <button
                               key={optionIndex}
-                              className="quick-reply-btn"
+                              className={`quick-reply-btn ${selectedOption === option ? 'selected' : ''} ${selectedOption !== null && selectedOption !== option ? 'disabled' : ''}`}
                               onClick={() => handleOptionClick(option)}
+                              disabled={selectedOption !== null}
                             >
                               {option}
                             </button>
