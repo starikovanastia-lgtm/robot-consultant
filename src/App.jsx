@@ -515,45 +515,52 @@ function App() {
 
           {/* Consultant */}
           {currentView === 'consultant' && (
-            <section className="consultant">
-              <div className="container">
-                <div className="consultant-content">
+            <div className="consultant-fullscreen">
+              <div className="consultant-container">
+                <div className="consultant-interface">
                   <div className="consultant-header">
-                    <h2>Робот-консультант</h2>
-                    <p>Поможем выбрать идеальный торт для вашего праздника</p>
-                  </div>
-                  
-                  <div className="consultant-card">
                     <div className="consultant-avatar">🤖</div>
                     <div className="consultant-info">
-                      <h3>Умный помощник</h3>
-                      <p>Задайте несколько вопросов, и я подберу для вас идеальный торт</p>
+                      <h3>Робот-консультант</h3>
+                      <p>Поможем выбрать идеальный торт</p>
                     </div>
-                    <button className="btn btn-primary" onClick={startConsultation}>
-                      🚀 Начать консультацию
+                    <button className="close-consultant-btn" onClick={() => setCurrentView('home')}>
+                      ✕
                     </button>
                   </div>
+                  <div className="consultant-content">
+                    <div className="consultant-card">
+                      <div className="consultant-avatar-large">🤖</div>
+                      <div className="consultant-info-large">
+                        <h3>Умный помощник</h3>
+                        <p>Задайте несколько вопросов, и я подберу для вас идеальный торт</p>
+                      </div>
+                      <button className="btn btn-primary" onClick={startConsultation}>
+                        🚀 Начать консультацию
+                      </button>
+                    </div>
 
-                  <div className="consultant-features">
-                    <div className="feature">
-                      <span className="feature-icon">🎯</span>
-                      <h4>Точный подбор</h4>
-                      <p>Учитываем все ваши предпочтения и бюджет</p>
-                    </div>
-                    <div className="feature">
-                      <span className="feature-icon">⚡</span>
-                      <h4>Быстро</h4>
-                      <p>Получите рекомендации за 2-3 минуты</p>
-                    </div>
-                    <div className="feature">
-                      <span className="feature-icon">💡</span>
-                      <h4>Умные советы</h4>
-                      <p>Поможем с выбором размера и оформления</p>
+                    <div className="consultant-features">
+                      <div className="feature">
+                        <span className="feature-icon">🎯</span>
+                        <h4>Точный подбор</h4>
+                        <p>Учитываем все ваши предпочтения и бюджет</p>
+                      </div>
+                      <div className="feature">
+                        <span className="feature-icon">⚡</span>
+                        <h4>Быстро</h4>
+                        <p>Получите рекомендации за 2-3 минуты</p>
+                      </div>
+                      <div className="feature">
+                        <span className="feature-icon">💡</span>
+                        <h4>Умные советы</h4>
+                        <p>Поможем с выбором размера и оформления</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
           )}
 
           {/* Footer */}

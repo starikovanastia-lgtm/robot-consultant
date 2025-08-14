@@ -505,6 +505,139 @@ body {
   line-height: 1.5;
 }
 
+/* Fullscreen Consultant */
+.consultant-fullscreen {
+  min-height: 100vh;
+  background: #FFF8F8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.consultant-fullscreen .consultant-container {
+  width: 100%;
+  max-width: 900px;
+}
+
+.consultant-fullscreen .consultant-interface {
+  height: 90vh;
+  max-height: 800px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(212, 165, 165, 0.08);
+  overflow: hidden;
+  border: 1px solid #FCE4E6;
+}
+
+.consultant-fullscreen .consultant-header {
+  background: #D4A5A5;
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.consultant-fullscreen .consultant-header h2 {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: white;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.consultant-fullscreen .consultant-header p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.close-consultant-btn {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.close-consultant-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.consultant-fullscreen .consultant-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  max-width: none;
+  margin: 0;
+}
+
+.consultant-fullscreen .consultant-card {
+  flex-direction: column;
+  text-align: center;
+  padding: 40px 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px rgba(212, 165, 165, 0.1);
+}
+
+.consultant-avatar-large {
+  font-size: 4rem;
+  background: #D4A5A5;
+  color: white;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.consultant-info-large {
+  margin-bottom: 25px;
+}
+
+.consultant-info-large h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #D4A5A5;
+  margin-bottom: 10px;
+}
+
+.consultant-info-large p {
+  font-size: 1rem;
+  color: #D4A5A5;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.consultant-fullscreen .consultant-features {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.consultant-fullscreen .feature {
+  padding: 20px;
+  border-radius: 12px;
+}
+
 /* Chat Interface */
 .chat-container {
   max-width: 800px;
@@ -1303,6 +1436,62 @@ body {
     width: 35px;
     height: 35px;
     font-size: 1.2rem;
+  }
+  
+  /* Fullscreen Consultant Mobile Styles */
+  .consultant-fullscreen {
+    padding: 10px;
+  }
+  
+  .consultant-fullscreen .consultant-interface {
+    height: 95vh;
+    max-height: none;
+    border-radius: 15px;
+  }
+  
+  .consultant-fullscreen .consultant-content {
+    padding: 20px;
+    max-height: calc(95vh - 80px);
+  }
+  
+  .consultant-fullscreen .consultant-header {
+    padding: 15px;
+  }
+  
+  .close-consultant-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    right: 15px;
+  }
+  
+  .consultant-fullscreen .consultant-card {
+    padding: 25px 20px;
+    margin-bottom: 20px;
+  }
+  
+  .consultant-avatar-large {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .consultant-info-large h3 {
+    font-size: 1.2rem;
+  }
+  
+  .consultant-info-large p {
+    font-size: 0.9rem;
+  }
+  
+  .consultant-fullscreen .consultant-features {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .consultant-fullscreen .feature {
+    padding: 15px;
   }
 }
 
