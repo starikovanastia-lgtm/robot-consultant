@@ -586,6 +586,7 @@ body {
   overflow-y: auto;
   max-width: none;
   margin: 0;
+  height: 100%;
 }
 
 .consultant-fullscreen .consultant-card {

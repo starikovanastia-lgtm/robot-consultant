@@ -509,15 +509,6 @@ function App() {
             <div className="consultant-fullscreen">
               <div className="consultant-container">
                 <div className="consultant-interface">
-                  <div className="consultant-header">
-                    <div className="consultant-avatar">🤖</div>
-                    <div className="consultant-info">
-                      <h3>Робот-консультант</h3>
-                    </div>
-                    <button className="close-consultant-btn" onClick={() => setCurrentView('catalog')}>
-                      ✕
-                    </button>
-                  </div>
                   <div className="consultant-content">
                     <div className="consultant-card">
                       <div className="consultant-avatar-large">🤖</div>
