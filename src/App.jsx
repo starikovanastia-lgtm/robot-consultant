@@ -513,7 +513,6 @@ function App() {
                     <div className="consultant-avatar">🤖</div>
                     <div className="consultant-info">
                       <h3>Робот-консультант</h3>
-                      <p>Помогу выбрать идеальный торт</p>
                     </div>
                     <button className="close-consultant-btn" onClick={() => setCurrentView('catalog')}>
                       ✕
