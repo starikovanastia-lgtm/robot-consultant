@@ -153,6 +153,9 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
+  min-height: 48px;
+  min-width: 120px;
+  justify-content: center;
 }
 
 .btn-primary {
@@ -179,6 +182,8 @@ body {
 .btn-small {
   padding: 8px 16px;
   font-size: 0.9rem;
+  min-height: 40px;
+  min-width: 100px;
 }
 
 /* Catalog */
@@ -609,12 +614,18 @@ body {
   background: white;
   border: 2px solid #F5E6E0;
   border-radius: 20px;
-  padding: 8px 16px;
+  padding: 12px 20px;
   font-size: 0.9rem;
   color: #A67B5B;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
+  min-height: 44px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .quick-reply-btn:hover {
@@ -764,36 +775,72 @@ body {
   font-size: 0.8rem;
 }
 
-/* Responsive Design */
+/* Mobile-First Responsive Design */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+  
   .header-content {
     flex-direction: column;
     gap: 15px;
+    padding: 10px 0;
+  }
+  
+  .logo-text h1 {
+    font-size: 1.5rem;
   }
   
   .nav {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 8px;
+  }
+  
+  .nav-btn {
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    min-height: 44px;
+  }
+  
+  .hero {
+    padding: 60px 0;
   }
   
   .hero-content h1 {
     font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+    margin-bottom: 30px;
   }
   
   .hero-buttons {
     flex-direction: column;
     align-items: center;
+    gap: 15px;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 280px;
+    min-height: 52px;
+    font-size: 1.1rem;
   }
   
   .categories {
     justify-content: flex-start;
     overflow-x: auto;
     padding-bottom: 10px;
+    gap: 10px;
   }
   
   .category-btn {
-    min-width: 80px;
+    min-width: 90px;
     flex-shrink: 0;
+    padding: 12px 15px;
   }
   
   .cakes-grid {
@@ -804,10 +851,12 @@ body {
   .consultant-card {
     flex-direction: column;
     text-align: center;
+    padding: 25px 20px;
   }
   
   .consultant-features {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
   
   .footer-content {
@@ -817,32 +866,42 @@ body {
   
   .chat-messages {
     max-height: 500px;
+    padding: 15px;
   }
   
   .message-bubble {
     max-width: 85%;
+    padding: 12px 16px;
   }
   
   .quick-replies {
     flex-direction: column;
+    gap: 8px;
   }
   
   .quick-reply-btn {
-    text-align: center;
+    width: 100%;
+    min-height: 48px;
+    font-size: 1rem;
   }
   
   .recommendations-grid {
     grid-template-columns: 1fr;
   }
+  
+  .catalog-header h2,
+  .consultant-header h2 {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 15px;
+    padding: 0 12px;
   }
   
   .hero {
-    padding: 60px 0;
+    padding: 50px 0;
   }
   
   .hero-content h1 {
@@ -851,7 +910,7 @@ body {
   
   .catalog-header h2,
   .consultant-header h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   .cake-content {
@@ -866,5 +925,63 @@ body {
   
   .cake-price-container {
     align-items: flex-start;
+  }
+  
+  .cake-actions {
+    padding: 0 15px 15px;
+  }
+  
+  .btn-small {
+    width: 100%;
+    min-height: 44px;
+  }
+  
+  .chat-header {
+    padding: 15px;
+  }
+  
+  .bot-info h3 {
+    font-size: 1.1rem;
+  }
+  
+  .message-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+  
+  .message-bubble {
+    max-width: 90%;
+    padding: 10px 14px;
+  }
+  
+  .message-bubble p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .nav-btn,
+  .quick-reply-btn,
+  .category-btn {
+    min-height: 48px;
+    padding: 12px 20px;
+  }
+  
+  .cake-card {
+    cursor: default;
+  }
+  
+  .cake-card:active {
+    transform: scale(0.98);
+  }
+  
+  .btn:active,
+  .nav-btn:active,
+  .quick-reply-btn:active,
+  .category-btn:active {
+    transform: scale(0.95);
   }
 }
