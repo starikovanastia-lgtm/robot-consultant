@@ -88,7 +88,7 @@ function App() {
       description: 'Три шоколада с панда-рисунком',
       price: '1059.00 ₽',
       weight: '1.4 кг',
-      category: 'chocolate',
+      category: 'mousse',
       url: 'https://fabrikatortov.com/o/5f19c8/',
       image: '🐼'
     },
@@ -138,9 +138,39 @@ function App() {
       description: 'Яркий клубничный мусс с розой',
       price: '879.00 ₽',
       weight: '1.1 кг',
-      category: 'fruit',
+      category: 'mousse',
       url: 'https://fabrikatortov.com/o/5c4a20/',
       image: '🍓'
+    },
+    {
+      id: 10,
+      name: 'Торт "ПРАЖСКИЙ"',
+      description: 'Классический шоколадный торт с шоколадным кремом',
+      price: '799.00 ₽',
+      weight: '1.0 кг',
+      category: 'chocolate',
+      url: 'https://fabrikatortov.com/o/example1/',
+      image: '🍫'
+    },
+    {
+      id: 11,
+      name: 'Торт "КРАСНЫЙ БАРХАТ"',
+      description: 'Яркий красный торт с крем-чизом',
+      price: '1299.00 ₽',
+      weight: '1.3 кг',
+      category: 'classic',
+      url: 'https://fabrikatortov.com/o/example2/',
+      image: '❤️'
+    },
+    {
+      id: 12,
+      name: 'Торт "ТИРАМИСУ"',
+      description: 'Итальянский десерт с кофе и маскарпоне',
+      price: '1199.00 ₽',
+      weight: '1.2 кг',
+      category: 'classic',
+      url: 'https://fabrikatortov.com/o/example3/',
+      image: '☕'
     }
   ];
 
@@ -240,6 +270,30 @@ function App() {
         filteredCakes = filteredCakes.filter(preferenceFilter);
       }
     }
+
+    // Если после фильтрации тортов мало, добавляем популярные
+    if (filteredCakes.length < 3) {
+      const popularCakes = cakes.filter(cake => cake.popular && !filteredCakes.find(fc => fc.id === cake.id));
+      filteredCakes = [...filteredCakes, ...popularCakes];
+    }
+
+    // Если все еще мало тортов, добавляем любые подходящие по бюджету
+    if (filteredCakes.length < 3) {
+      const remainingCakes = cakes.filter(cake => !filteredCakes.find(fc => fc.id === cake.id));
+      filteredCakes = [...filteredCakes, ...remainingCakes];
+    }
+
+    // Сортируем: сначала по предпочтениям, потом по популярности, потом по цене
+    filteredCakes.sort((a, b) => {
+      // Приоритет популярным тортам
+      if (a.popular && !b.popular) return -1;
+      if (!a.popular && b.popular) return 1;
+      
+      // Приоритет более дешевым тортам
+      const priceA = parseInt(a.price.match(/\d+/)[0]);
+      const priceB = parseInt(b.price.match(/\d+/)[0]);
+      return priceA - priceB;
+    });
 
     return filteredCakes.slice(0, 3);
   };
