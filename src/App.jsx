@@ -1,0 +1,520 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [currentView, setCurrentView] = useState('home');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [chatActive, setChatActive] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
+
+  const questions = [
+    {
+      id: 'occasion',
+      text: 'Для какого случая вам нужен торт?',
+      options: ['🎉 День рождения', '💒 Свадьба', '🎊 Юбилей', '💕 Романтический ужин', '👔 Корпоратив', '👨‍👩‍👧‍👦 Семейный праздник', '☕ Чаепитие']
+    },
+    {
+      id: 'sweetness',
+      text: 'Какой уровень сладости вы предпочитаете?',
+      options: ['Не очень сладкий', 'Умеренно сладкий', 'Очень сладкий']
+    },
+    {
+      id: 'size',
+      text: 'Какой размер торта вам нужен?',
+      options: ['Маленький (до 1 кг)', 'Средний (1-1.5 кг)', 'Большой (от 1.5 кг)']
+    },
+    {
+      id: 'budget',
+      text: 'Какой у вас бюджет?',
+      options: ['До 1000 ₽', '1000-1500 ₽', 'От 1500 ₽']
+    },
+    {
+      id: 'preference',
+      text: 'Какие ингредиенты вы предпочитаете?',
+      options: ['Шоколад', 'Мед', 'Крем', 'Мусс', 'Не важно']
+    }
+  ];
+
+  const categories = [
+    { id: 'all', name: 'Все торты', icon: '🍰' },
+    { id: 'chocolate', name: 'Шоколадные', icon: '🍫' },
+    { id: 'cheesecake', name: 'Чизкейки', icon: '🧀' },
+    { id: 'honey', name: 'Медовые', icon: '🍯' },
+    { id: 'classic', name: 'Классические', icon: '🎂' },
+    { id: 'fruit', name: 'Фруктовые', icon: '🍓' },
+    { id: 'mousse', name: 'Муссовые', icon: '☁️' }
+  ];
+
+  const cakes = [
+    {
+      id: 1,
+      name: 'Торт "НАСЛАЖДЕНИЕ"',
+      description: 'Квадратный темный шоколадный торт с глянцевой глазурью',
+      price: '629.00 ₽',
+      oldPrice: '750.00 ₽',
+      weight: '1.0 кг',
+      category: 'chocolate',
+      url: 'https://fabrikatortov.com/o/bf7836/',
+      image: '🍫',
+      popular: true,
+      discount: 16
+    },
+    {
+      id: 2,
+      name: 'Торт "КОКОСОВЫЙ"',
+      description: 'Круглый торт, покрытый белой кокосовой стружкой',
+      price: '879.00 ₽',
+      weight: '1.2 кг',
+      category: 'classic',
+      url: 'https://fabrikatortov.com/o/6961a0/',
+      image: '🥥'
+    },
+    {
+      id: 3,
+      name: 'Торт "ЧИЗКЕЙК НЬЮ-ЙОРК"',
+      description: 'Многослойный чизкейк с красным желе',
+      price: '999.00 ₽',
+      weight: '1.3 кг',
+      category: 'cheesecake',
+      url: 'https://fabrikatortov.com/o/696185/',
+      image: '🧀',
+      popular: true
+    },
+    {
+      id: 4,
+      name: 'Торт "ШОКОЛАДНЫЙ МУСС"',
+      description: 'Три шоколада с панда-рисунком',
+      price: '1059.00 ₽',
+      weight: '1.4 кг',
+      category: 'chocolate',
+      url: 'https://fabrikatortov.com/o/5f19c8/',
+      image: '🐼'
+    },
+    {
+      id: 5,
+      name: 'Торт "МЕДОВЫЙ"',
+      description: 'Классический медовый торт с медовыми сотами',
+      price: '519.00 ₽',
+      weight: '1.0 кг',
+      category: 'honey',
+      url: 'https://fabrikatortov.com/o/5c4a77/',
+      image: '🍯'
+    },
+    {
+      id: 6,
+      name: 'Торт "НАПОЛЕОН"',
+      description: 'Традиционный слоеный торт с заварным кремом',
+      price: '479.00 ₽',
+      weight: '1.1 кг',
+      category: 'classic',
+      url: 'https://fabrikatortov.com/o/5c9690/',
+      image: '🎂'
+    },
+    {
+      id: 7,
+      name: 'Торт "БАНАНОВЫЙ"',
+      description: 'С бананами и соленой карамелью',
+      price: '999.00 ₽',
+      weight: '1.2 кг',
+      category: 'fruit',
+      url: 'https://fabrikatortov.com/o/55de16/',
+      image: '🍌'
+    },
+    {
+      id: 8,
+      name: 'Торт "ЗЛАКОВЫЙ МУСС"',
+      description: 'Нежный злаковый муссовый торт',
+      price: '879.00 ₽',
+      weight: '1.1 кг',
+      category: 'mousse',
+      url: 'https://fabrikatortov.com/o/5c4a20/',
+      image: '🌾'
+    },
+    {
+      id: 9,
+      name: 'Торт "КЛУБНИЧНЫЙ МУСС"',
+      description: 'Яркий клубничный мусс с розой',
+      price: '879.00 ₽',
+      weight: '1.1 кг',
+      category: 'fruit',
+      url: 'https://fabrikatortov.com/o/5c4a20/',
+      image: '🍓'
+    }
+  ];
+
+  const filteredCakes = selectedCategory === 'all' 
+    ? cakes 
+    : cakes.filter(cake => cake.category === selectedCategory);
+
+  const handleCakeClick = (url) => {
+    window.open(url, '_blank');
+  };
+
+  const startConsultation = () => {
+    setChatActive(true);
+    setMessages([
+      {
+        type: 'bot',
+        text: 'Привет! 👋 Я робот-консультант Фабрики тортов. Помогу вам выбрать идеальный торт для вашего праздника!'
+      },
+      {
+        type: 'bot',
+        text: questions[0].text,
+        options: questions[0].options
+      }
+    ]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers({});
+  };
+
+  const handleOptionClick = (option) => {
+    const currentQuestion = questions[currentQuestionIndex];
+    
+    // Сохраняем ответ пользователя
+    setUserAnswers(prev => ({
+      ...prev,
+      [currentQuestion.id]: option
+    }));
+
+    // Добавляем сообщение пользователя
+    setMessages(prev => [...prev, { type: 'user', text: option }]);
+
+    // Проверяем, есть ли еще вопросы
+    if (currentQuestionIndex < questions.length - 1) {
+      // Переходим к следующему вопросу
+      setTimeout(() => {
+        const nextQuestion = questions[currentQuestionIndex + 1];
+        const botResponse = {
+          type: 'bot',
+          text: nextQuestion.text,
+          options: nextQuestion.options
+        };
+        setMessages(prev => [...prev, botResponse]);
+        setCurrentQuestionIndex(prev => prev + 1);
+      }, 1000);
+    } else {
+      // Показываем рекомендации
+      setTimeout(() => {
+        const recommendations = generateRecommendations();
+        const botResponse = {
+          type: 'bot',
+          text: `Спасибо за ответы! 🎯 Я подобрал для вас идеальные торты на основе ваших предпочтений:`,
+          recommendations: recommendations
+        };
+        setMessages(prev => [...prev, botResponse]);
+      }, 1000);
+    }
+  };
+
+  const generateRecommendations = () => {
+    let filteredCakes = [...cakes];
+
+    // Фильтрация по бюджету
+    if (userAnswers.budget) {
+      const budgetMap = {
+        'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
+        '1000-1500 ₽': price => {
+          const priceNum = parseInt(price.match(/\d+/)[0]);
+          return priceNum >= 1000 && priceNum <= 1500;
+        },
+        'От 1500 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1500
+      };
+      const budgetFilter = budgetMap[userAnswers.budget];
+      if (budgetFilter) {
+        filteredCakes = filteredCakes.filter(cake => budgetFilter(cake.price));
+      }
+    }
+
+    // Фильтрация по предпочтениям
+    if (userAnswers.preference) {
+      const preferenceMap = {
+        'Шоколад': cake => cake.category === 'chocolate',
+        'Мед': cake => cake.category === 'honey',
+        'Крем': cake => cake.category === 'classic',
+        'Мусс': cake => cake.category === 'mousse'
+      };
+      const preferenceFilter = preferenceMap[userAnswers.preference];
+      if (preferenceFilter) {
+        filteredCakes = filteredCakes.filter(preferenceFilter);
+      }
+    }
+
+    return filteredCakes.slice(0, 3);
+  };
+
+  const resetChat = () => {
+    setChatActive(false);
+    setMessages([]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers({});
+  };
+
+  return (
+    <div className="App">
+      {/* Header */}
+      <header className="header">
+        <div className="container">
+          <div className="header-content">
+            <div className="logo">
+              <div className="logo-icon">🍰</div>
+              <div className="logo-text">
+                <h1>Фабрика тортов</h1>
+                <p>Свежие торты на заказ</p>
+              </div>
+            </div>
+            
+            <nav className="nav">
+              <button 
+                className={`nav-btn ${currentView === 'home' ? 'active' : ''}`}
+                onClick={() => setCurrentView('home')}
+              >
+                🏠 Главная
+              </button>
+              <button 
+                className={`nav-btn ${currentView === 'consultant' ? 'active' : ''}`}
+                onClick={() => setCurrentView('consultant')}
+              >
+                🤖 Консультант
+              </button>
+              <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer" className="nav-btn">
+                🌐 Сайт
+              </a>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      {currentView === 'home' && (
+        <section className="hero">
+          <div className="container">
+            <div className="hero-content">
+              <h1>Добро пожаловать в Фабрику тортов!</h1>
+              <p>Создаем вкусные торты для ваших особенных моментов</p>
+              <div className="hero-buttons">
+                <button className="btn btn-primary" onClick={() => setCurrentView('consultant')}>
+                  🤖 Получить консультацию
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Catalog */}
+      {currentView === 'catalog' && (
+        <main className="catalog">
+          <div className="container">
+            <div className="catalog-header">
+              <h2>🍰 Каталог тортов</h2>
+              <p>Выберите идеальный торт для вашего праздника</p>
+            </div>
+
+            {/* Categories */}
+            <div className="categories">
+              {categories.map(category => (
+                <button
+                  key={category.id}
+                  className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
+                  onClick={() => setSelectedCategory(category.id)}
+                >
+                  <span className="category-icon">{category.icon}</span>
+                  <span className="category-name">{category.name}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Cakes Grid */}
+            <div className="cakes-grid">
+              {filteredCakes.map(cake => (
+                <div key={cake.id} className="cake-card" onClick={() => handleCakeClick(cake.url)}>
+                  {cake.popular && <div className="popular-badge">🔥 Популярный</div>}
+                  {cake.discount && <div className="discount-badge">-{cake.discount}%</div>}
+                  
+                  <div className="cake-image">
+                    <span className="cake-emoji">{cake.image}</span>
+                  </div>
+                  
+                  <div className="cake-content">
+                    <h3 className="cake-name">{cake.name}</h3>
+                    <p className="cake-description">{cake.description}</p>
+                    
+                    <div className="cake-details">
+                      <span className="cake-weight">{cake.weight}</span>
+                      <div className="cake-price-container">
+                        {cake.oldPrice && (
+                          <span className="cake-old-price">{cake.oldPrice}</span>
+                        )}
+                        <span className="cake-price">{cake.price}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="cake-category">
+                      {categories.find(cat => cat.id === cake.category)?.name}
+                    </div>
+                  </div>
+                  
+                  <div className="cake-actions">
+                    <button className="btn btn-primary btn-small">
+                      Заказать
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </main>
+      )}
+
+      {/* Consultant */}
+      {currentView === 'consultant' && (
+        <main className="consultant">
+          <div className="container">
+            {!chatActive ? (
+              <div className="consultant-content">
+                <div className="consultant-header">
+                  <h2>🤖 Робот-консультант</h2>
+                  <p>Поможем выбрать идеальный торт для вашего праздника</p>
+                </div>
+                
+                <div className="consultant-card">
+                  <div className="consultant-avatar">🤖</div>
+                  <div className="consultant-info">
+                    <h3>Робот-консультант Фабрики тортов</h3>
+                    <p>Онлайн • Готов помочь</p>
+                  </div>
+                  <button className="btn btn-primary" onClick={startConsultation}>
+                    Начать консультацию
+                  </button>
+                </div>
+                
+                <div className="consultant-features">
+                  <div className="feature">
+                    <span className="feature-icon">🎯</span>
+                    <h4>Персональный подбор</h4>
+                    <p>Учитываем ваши предпочтения и бюджет</p>
+                  </div>
+                  <div className="feature">
+                    <span className="feature-icon">⚡</span>
+                    <h4>Быстрые ответы</h4>
+                    <p>Получите рекомендации за несколько кликов</p>
+                  </div>
+                  <div className="feature">
+                    <span className="feature-icon">🎉</span>
+                    <h4>Для любого случая</h4>
+                    <p>От дней рождения до корпоративов</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="chat-container">
+                <div className="chat-interface">
+                  <div className="chat-header">
+                    <div className="bot-avatar">🤖</div>
+                    <div className="bot-info">
+                      <h3>Робот-консультант Фабрики тортов</h3>
+                      <p>Онлайн</p>
+                    </div>
+                    <button className="btn btn-secondary btn-small" onClick={resetChat}>
+                      🔄 Начать заново
+                    </button>
+                  </div>
+                  
+                  <div className="chat-messages">
+                    {messages.map((message, index) => (
+                      <div key={index} className={`message ${message.type === 'user' ? 'user' : ''}`}>
+                        <div className="message-avatar">
+                          {message.type === 'user' ? '👤' : '🤖'}
+                        </div>
+                        <div className="message-bubble">
+                          <p>{message.text}</p>
+                          
+                          {message.options && (
+                            <div className="quick-replies">
+                              {message.options.map((option, optIndex) => (
+                                <button
+                                  key={optIndex}
+                                  className="quick-reply-btn"
+                                  onClick={() => handleOptionClick(option)}
+                                >
+                                  {option}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+
+                          {message.recommendations && (
+                            <div className="recommendations">
+                              <div className="recommendations-header">
+                                <h4>🎯 Ваши персональные рекомендации:</h4>
+                              </div>
+                              <div className="recommendations-grid">
+                                {message.recommendations.map((cake, cakeIndex) => (
+                                  <div key={cakeIndex} className="cake-card" onClick={() => handleCakeClick(cake.url)}>
+                                    <div className="cake-card-image">{cake.image}</div>
+                                    <div className="cake-card-content">
+                                      <h4>{cake.name}</h4>
+                                      <p>{cake.description}</p>
+                                      <div className="cake-card-details">
+                                        <span className="cake-weight">{cake.weight}</span>
+                                        <span className="cake-price">{cake.price}</span>
+                                      </div>
+                                      <div className="cake-category">{cake.category}</div>
+                                    </div>
+                                    <div className="cake-card-link">
+                                      <span>🔗</span>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="recommendations-footer">
+                                <p>💡 Нажмите на любой торт, чтобы перейти на официальный сайт и заказать!</p>
+                                <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                                  🌐 Перейти на сайт Фабрики тортов
+                                </a>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </main>
+      )}
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-content">
+            <div className="footer-section">
+              <h4>🍰 Фабрика тортов</h4>
+              <p>Создаем вкусные торты для ваших особенных моментов</p>
+            </div>
+            <div className="footer-section">
+              <h4>📞 Контакты</h4>
+              <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+              <p>Email: info@fabrikatortov.com</p>
+            </div>
+            <div className="footer-section">
+              <h4>🔗 Ссылки</h4>
+              <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer">
+                Официальный сайт
+              </a>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2024 Фабрика тортов. Все права защищены.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
