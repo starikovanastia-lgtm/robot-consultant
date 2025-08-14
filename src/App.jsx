@@ -248,7 +248,12 @@ function App() {
       };
       const preferenceFilter = preferenceMap[userAnswers.preference];
       if (preferenceFilter) {
-        filteredCakes = filteredCakes.filter(preferenceFilter);
+        const preferenceCakes = filteredCakes.filter(preferenceFilter);
+        // Если есть торты по предпочтениям, используем их
+        if (preferenceCakes.length > 0) {
+          filteredCakes = preferenceCakes;
+        }
+        // Если нет тортов по предпочтениям, оставляем все подходящие по бюджету
       }
     }
 
