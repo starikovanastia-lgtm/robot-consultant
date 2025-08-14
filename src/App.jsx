@@ -385,24 +385,31 @@ function App() {
                           </div>
                           <div className="recommendations-grid">
                             {message.recommendations.map((cake) => (
-                              <div key={cake.id} className="cake-card" onClick={() => handleCakeClick(cake.url)}>
-                                <div className="cake-card-image">
-                                  {cake.image}
+                              <div key={cake.id} className="recommendation-card">
+                                <div className="recommendation-image">
+                                  <span className="cake-emoji">{cake.image}</span>
                                 </div>
-                                <div className="cake-card-content">
-                                  <h4>{cake.name}</h4>
-                                  <p>{cake.description}</p>
-                                  <div className="cake-card-details">
-                                    <span className="cake-weight">{cake.weight}</span>
-                                    <span className="cake-price">{cake.price}</span>
+                                <div className="recommendation-content">
+                                  <h5 className="recommendation-name">{cake.name}</h5>
+                                  <p className="recommendation-description">{cake.description}</p>
+                                  <div className="recommendation-details">
+                                    <span className="recommendation-weight">{cake.weight}</span>
+                                    <span className="recommendation-price">{cake.price}</span>
                                   </div>
+                                  <a 
+                                    href={cake.url} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="recommendation-link"
+                                  >
+                                    🛒 Заказать на сайте
+                                  </a>
                                 </div>
-                                <div className="cake-card-link">🔗</div>
                               </div>
                             ))}
                           </div>
                           <div className="recommendations-footer">
-                            <p>Нажмите на карточку торта, чтобы перейти на сайт и заказать</p>
+                            <p>Нажмите на ссылку, чтобы перейти на сайт и заказать торт</p>
                             <button className="btn btn-primary btn-small" onClick={resetChat}>
                               🍰 Начать заново
                             </button>
