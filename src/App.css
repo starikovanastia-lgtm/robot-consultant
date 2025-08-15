@@ -1056,55 +1056,7 @@ body {
   opacity: 1;
 }
 
-/* Footer */
-.footer {
-  background: #b4951e;
-  color: white;
-  padding: 40px 0 20px;
-  margin-top: auto;
-}
 
-.footer-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-bottom: 30px;
-}
-
-.footer-section h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #FCE4E6;
-}
-
-.footer-section p {
-  color: #FCE4E6;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-}
-
-.footer-section a {
-  color: #FCE4E6;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.footer-section a:hover {
-  text-decoration: underline;
-  color: white;
-}
-
-.footer-bottom {
-  border-top: 1px solid #b4951e;
-  padding-top: 20px;
-  text-align: center;
-}
-
-.footer-bottom p {
-  color: #FCE4E6;
-  font-size: 0.8rem;
-}
 
 /* Mobile-First Responsive Design */
 @media (max-width: 768px) {
@@ -1270,80 +1222,9 @@ body {
     gap: 20px;
   }
   
-  /* Mobile Footer - как всплывающая панель снизу */
-  .footer {
-    position: fixed;
-    bottom: -100%;
-    left: 0;
-    width: 100%;
-    background: #D4A5A5;
-    transition: bottom 0.3s ease;
-    z-index: 998;
-    max-height: 80vh;
-    overflow-y: auto;
-  }
+
   
-  .footer.active {
-    bottom: 0;
-  }
-  
-  .footer-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 20px;
-    padding: 20px 15px;
-  }
-  
-  .footer-section {
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-  }
-  
-  .footer-section h4 {
-    margin-bottom: 10px;
-    font-size: 1rem;
-  }
-  
-  .footer-section p {
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-  }
-  
-  .footer-bottom {
-    padding: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  
-  /* Mobile footer toggle button */
-  .mobile-footer-toggle {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    z-index: 1001;
-    background: #b4951e;
-    border: none;
-    color: white;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(180, 149, 30, 0.3);
-  }
-  
-  .mobile-footer-toggle:hover {
-    background: #E6B85C;
-    transform: scale(1.05);
-  }
-  
-  /* Add bottom padding to main content */
-  .hero, .catalog, .consultant {
-    padding-bottom: 80px;
-  }
+
   
   .chat-messages {
     max-height: 500px;

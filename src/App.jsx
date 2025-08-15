@@ -9,7 +9,6 @@ function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileFooterOpen, setMobileFooterOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const questions = [
@@ -445,14 +444,8 @@ function App() {
     setMobileFooterOpen(false);
   };
 
-  const toggleMobileFooter = () => {
-    setMobileFooterOpen(!mobileFooterOpen);
-    setMobileMenuOpen(false);
-  };
-
   const closeMobilePanels = () => {
     setMobileMenuOpen(false);
-    setMobileFooterOpen(false);
   };
 
   return (
@@ -464,17 +457,12 @@ function App() {
         </button>
       )}
 
-      {/* Mobile Footer Toggle Button */}
-      {!chatActive && (
-        <button className="mobile-footer-toggle" onClick={toggleMobileFooter}>
-          ℹ️
-        </button>
-      )}
+
 
       {/* Mobile Overlay */}
       {!chatActive && (
         <div 
-          className={`mobile-overlay ${mobileMenuOpen || mobileFooterOpen ? 'active' : ''}`}
+          className={`mobile-overlay ${mobileMenuOpen ? 'active' : ''}`}
           onClick={closeMobilePanels}
         />
       )}
@@ -708,34 +696,7 @@ function App() {
             </div>
           )}
 
-          {/* Footer */}
-          <footer className={`footer ${mobileFooterOpen ? 'active' : ''}`}>
-            <div className="container">
-              <div className="footer-content">
-                <div className="footer-section">
-                  <h4>Адреса</h4>
-                  <p>📍 г. Архангельск</p>
-                  <p>Троицкий проспект, 121/3</p>
-                  <p>📍 г. Северодвинск</p>
-                  <p>ул. Карла Маркса, 40</p>
-                </div>
-                <div className="footer-section">
-                  <h4>Режим работы</h4>
-                  <p>🕐 Ежедневно: 10:00 - 20:00</p>
-                  <p>🎂 Торты на заказ</p>
-                </div>
-                <div className="footer-section">
-                  <h4>Полезные ссылки</h4>
-                  <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer">🌐 Основной сайт</a>
-                  <p>📋 Условия заказа</p>
-                  <p>🔒 Политика конфиденциальности</p>
-                </div>
-              </div>
-              <div className="footer-bottom">
-                <p>&copy; 2024 Фабрика тортов. Все права защищены.</p>
-              </div>
-            </div>
-          </footer>
+
         </>
       )}
     </div>
