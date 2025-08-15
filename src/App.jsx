@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import logoImage from '/images/logo_exact.png';
+import robotImage from '/images/robot_exact.png';
 
 function App() {
   const [currentView, setCurrentView] = useState('consultant');
@@ -508,7 +509,9 @@ function App() {
         <div className="chat-container">
           <div className="chat-interface">
             <div className="chat-header">
-              <div className="bot-avatar">🤖</div>
+              <div className="bot-avatar">
+                <img src={robotImage} alt="Робот-консультант" />
+              </div>
               <div className="bot-info">
                   <h3>Робот-консультант</h3>
                   <p>Помогу выбрать идеальный торт</p>
@@ -521,7 +524,9 @@ function App() {
               {messages.map((message, index) => (
                   <div key={index} className={`message ${message.type}`}>
                   <div className="message-avatar">
-                      {message.type === 'bot' ? '🤖' : '👤'}
+                      {message.type === 'bot' ? (
+                        <img src={robotImage} alt="Робот" />
+                      ) : '👤'}
                   </div>
                   <div className="message-bubble">
                     <p>{message.text}</p>
@@ -666,7 +671,9 @@ function App() {
                 <div className="consultant-interface">
                   <div className="consultant-content">
                     <div className="consultant-card">
-                      <div className="consultant-avatar-large">🤖</div>
+                      <div className="consultant-avatar-large">
+                        <img src={robotImage} alt="Робот-консультант" />
+                      </div>
                       <div className="consultant-info-large">
                         <h3>Умный помощник</h3>
                         <p>Задайте несколько вопросов, и я подберу для вас идеальный торт</p>
