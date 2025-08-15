@@ -492,7 +492,8 @@ function App() {
                     closeMobilePanels();
                   }}
                 >
-                  🤖 Консультант
+                  <img src={robotImage} alt="Робот" style={{ width: '20px', height: '20px', marginRight: '5px' }} />
+                  Консультант
                 </button>
                 <a href="https://fabrikatortov.com" target="_blank" rel="noopener noreferrer" className="nav-btn">
                   🌐 Сайт
