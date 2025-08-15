@@ -51,29 +51,31 @@
 }
 
 .nav-btn {
-  background: transparent;
-  border: 2px solid #e0e0e0;
+  background: #f9e2d7;
+  border: 2px solid #b4951e;
   border-radius: 25px;
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 500;
-  color: #666;
+  color: #b4951e;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
 }
 
 .nav-btn:hover {
-  border-color: #ff6b6b;
-  color: #ff6b6b;
+  border-color: #b4951e;
+  color: #b4951e;
   transform: translateY(-2px);
+  background: #b4951e;
+  color: white;
 }
 
 .nav-btn.active {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-  border-color: transparent;
-  color: white;
-  box-shadow: 0 4px 15px rgba(238, 90, 36, 0.3);
+  background: #f9e2d7 !important;
+  border-color: #b4951e !important;
+  color: #b4951e !important;
+  box-shadow: 0 4px 15px rgba(180, 149, 30, 0.3) !important;
 }
 
 @media (max-width: 768px) {

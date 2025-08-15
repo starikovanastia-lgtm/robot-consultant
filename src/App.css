@@ -106,15 +106,15 @@ body {
 }
 
 .nav-btn.active:hover {
-  background: #b4951e;
-  border-color: #b4951e;
-  color: white;
+  background: #b4951e !important;
+  border-color: #b4951e !important;
+  color: white !important;
 }
 
 .nav-btn.active {
-  background: #f9e2d7;
-  border-color: #b4951e;
-  color: #b4951e;
+  background: #f9e2d7 !important;
+  border-color: #b4951e !important;
+  color: #b4951e !important;
 }
 
 /* Hero Section */
