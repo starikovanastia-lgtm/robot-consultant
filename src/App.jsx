@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import logoImage from '/images/logo.svg';
 
 function App() {
   const [currentView, setCurrentView] = useState('consultant');
@@ -474,7 +475,7 @@ function App() {
           <div className="header-content">
             <div className="logo">
               <div className="logo-icon">
-                <img src="/images/logo.svg" alt="Логотип Фабрики тортов" />
+                <img src={logoImage} alt="Логотип Фабрики тортов" />
               </div>
               <div className="logo-text">
                 <h1>Фабрика тортов от Елены Стариковой</h1>
