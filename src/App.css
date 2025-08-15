@@ -160,18 +160,17 @@ body {
 }
 
 .btn-primary {
-  background: #f9e2d7;
-  color: #b4951e;
+  background: #b4951e;
+  color: white;
   border: 2px solid #b4951e;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(180, 149, 30, 0.2);
+  box-shadow: 0 8px 25px rgba(180, 149, 30, 0.3);
   border-color: #b4951e;
+  background: #f9e2d7;
   color: #b4951e;
-  background: #b4951e;
-  color: white;
 }
 
 .btn-secondary {
@@ -455,14 +454,15 @@ body {
 
 .consultant-avatar {
   font-size: 3rem;
-  background: #b4951e;
-  color: white;
+  background: #f9e2d7;
+  color: #b4951e;
   border-radius: 50%;
   width: 80px;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid #b4951e;
 }
 
 .consultant-info {
@@ -612,8 +612,8 @@ body {
 
 .consultant-avatar-large {
   font-size: 4rem;
-  background: #b4951e;
-  color: white;
+  background: #f9e2d7;
+  color: #b4951e;
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -621,6 +621,7 @@ body {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  border: 3px solid #b4951e;
 }
 
 .consultant-info-large {
@@ -729,13 +730,15 @@ body {
 
 .bot-avatar {
   font-size: 2rem;
-  background: rgba(255, 255, 255, 0.2);
+  background: #f9e2d7;
+  color: #b4951e;
   border-radius: 50%;
   width: 50px;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid #b4951e;
 }
 
 .bot-info {
