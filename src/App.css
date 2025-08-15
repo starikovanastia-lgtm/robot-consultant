@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+html {
+  border-top: none;
+}
+
 body {
   font-family: 'Kelly Slab', serif;
   -webkit-font-smoothing: antialiased;
@@ -12,6 +16,7 @@ body {
   line-height: 1.6;
   color: #b4951e;
   background-color: #f9e2d7;
+  border-top: none;
 }
 
 .container {
@@ -34,6 +39,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: none;
 }
 
 .header-content {
