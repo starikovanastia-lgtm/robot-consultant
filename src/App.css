@@ -160,8 +160,8 @@ body {
 }
 
 .btn-primary {
-  background: #b4951e;
-  color: white;
+  background: #f9e2d7;
+  color: #b4951e;
   border: 2px solid #b4951e;
 }
 
@@ -169,8 +169,8 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(180, 149, 30, 0.3);
   border-color: #b4951e;
-  background: #f9e2d7;
-  color: #b4951e;
+  background: #b4951e;
+  color: white;
 }
 
 .btn-secondary {
