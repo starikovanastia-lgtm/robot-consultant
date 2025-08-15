@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import logoImage from '/images/logo.svg';
+import logoImage from '/images/logo_exact.png';
 
 function App() {
   const [currentView, setCurrentView] = useState('consultant');
