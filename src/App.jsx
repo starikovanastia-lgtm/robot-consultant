@@ -473,7 +473,9 @@ function App() {
         <div className="container">
           <div className="header-content">
             <div className="logo">
-              <div className="logo-icon">🍰</div>
+              <div className="logo-icon">
+                <img src="/images/logo.svg" alt="Логотип Фабрики тортов" />
+              </div>
               <div className="logo-text">
                 <h1>Фабрика тортов от Елены Стариковой</h1>
                   <p>Свежие торты на заказ</p>
