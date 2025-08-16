@@ -376,10 +376,9 @@ function App() {
       };
       const preferenceFilter = preferenceMap[userAnswers.preference];
       if (preferenceFilter) {
-        const preferenceCakes = filteredCakes.filter(preferenceFilter);
-        
         // Проверяем конфликт между сладостью и предпочтениями
-        if (userAnswers.sweetness && preferenceCakes.length > 0) {
+        let hasConflict = false;
+        if (userAnswers.sweetness) {
           const sweetnessMap = {
             'Не очень сладкий': ['cheesecake', 'mousse'],
             'Умеренно сладкий': ['fruit', 'classic'],
@@ -390,7 +389,6 @@ function App() {
           const selectedPreference = userAnswers.preference;
           
           // Проверяем конфликт
-          let hasConflict = false;
           if (selectedSweetness.includes('cheesecake') && selectedPreference === 'Мед') hasConflict = true;
           if (selectedSweetness.includes('mousse') && selectedPreference === 'Мед') hasConflict = true;
           if (selectedSweetness.includes('fruit') && selectedPreference === 'Шоколад') hasConflict = true;
@@ -400,14 +398,29 @@ function App() {
           
           if (hasConflict) {
             explanation = `💡 Вы выбрали "${userAnswers.sweetness.toLowerCase()}", но предпочли "${userAnswers.preference.toLowerCase()}". Я приоритет отдал вашему предпочтению, так как это более конкретный выбор!`;
+            
+            // При конфликте игнорируем фильтрацию по сладости и ищем торты по предпочтениям среди всех тортов
+            const allCakesByPreference = cakes.filter(preferenceFilter);
+            const budgetFilter = userAnswers.budget ? {
+              'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
+              'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) > 1000
+            }[userAnswers.budget] : () => true;
+            
+            filteredCakes = allCakesByPreference.filter(cake => budgetFilter(cake.price));
+          } else {
+            // Нет конфликта - применяем обычную фильтрацию
+            const preferenceCakes = filteredCakes.filter(preferenceFilter);
+            if (preferenceCakes.length > 0) {
+              filteredCakes = preferenceCakes;
+            }
+          }
+        } else {
+          // Нет выбора сладости - просто фильтруем по предпочтениям
+          const preferenceCakes = filteredCakes.filter(preferenceFilter);
+          if (preferenceCakes.length > 0) {
+            filteredCakes = preferenceCakes;
           }
         }
-        
-        // Если есть торты по предпочтениям, используем их (приоритет)
-        if (preferenceCakes.length > 0) {
-          filteredCakes = preferenceCakes;
-        }
-        // Если нет тортов по предпочтениям, оставляем все подходящие по бюджету
       }
     }
 
