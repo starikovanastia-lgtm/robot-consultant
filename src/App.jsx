@@ -301,7 +301,7 @@ function App() {
     if (userAnswers.budget) {
       const budgetMap = {
         'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
-        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) > 1000
+        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1000  // Изменили с > на >=
       };
       const budgetFilter = budgetMap[userAnswers.budget];
       if (budgetFilter) {
@@ -379,57 +379,67 @@ function App() {
       };
       const preferenceFilter = preferenceMap[userAnswers.preference];
       if (preferenceFilter) {
-        // Проверяем конфликт между сладостью и предпочтениями
-        let hasConflict = false;
-        if (userAnswers.sweetness) {
-          const sweetnessMap = {
-            'Не очень сладкий': ['cheesecake', 'mousse'],
-            'Умеренно сладкий': ['fruit', 'classic'],
-            'Очень сладкий': ['chocolate', 'honey']
-          };
-          
-          const selectedSweetness = sweetnessMap[userAnswers.sweetness];
-          const selectedPreference = userAnswers.preference;
-          
-          // Проверяем конфликт
-          if (selectedSweetness.includes('cheesecake') && selectedPreference === 'Мед') hasConflict = true;
-          if (selectedSweetness.includes('mousse') && selectedPreference === 'Мед') hasConflict = true;
-          if (selectedSweetness.includes('fruit') && selectedPreference === 'Шоколад') hasConflict = true;
-          if (selectedSweetness.includes('classic') && selectedPreference === 'Шоколад') hasConflict = true;
-          if (selectedSweetness.includes('chocolate') && selectedPreference === 'Мусс') hasConflict = true;
-          if (selectedSweetness.includes('honey') && selectedPreference === 'Мусс') hasConflict = true;
-          
-          if (hasConflict) {
-            explanation = `💡 Вы выбрали "${userAnswers.sweetness.toLowerCase()}", но предпочли "${userAnswers.preference.toLowerCase()}". Я приоритет отдал вашему предпочтению, так как это более конкретный выбор!`;
+        // Специальная логика для медового торта
+        if (userAnswers.preference === 'Мед') {
+          const honeyCake = cakes.find(cake => cake.category === 'honey');
+          if (honeyCake) {
+            filteredCakes = [honeyCake];
+            explanation = `🍯 Вы выбрали мед как основную составляющую! У нас есть только один медовый торт - "${honeyCake.name}" за ${honeyCake.price}. Это классический выбор для любителей натурального меда!`;
+            console.log('🍯 Медовый торт найден:', honeyCake);
+          }
+        } else {
+          // Проверяем конфликт между сладостью и предпочтениями для других ингредиентов
+          let hasConflict = false;
+          if (userAnswers.sweetness) {
+            const sweetnessMap = {
+              'Не очень сладкий': ['cheesecake', 'mousse'],
+              'Умеренно сладкий': ['fruit', 'classic'],
+              'Очень сладкий': ['chocolate', 'honey']
+            };
             
-            // При конфликте игнорируем фильтрацию по сладости и ищем торты по предпочтениям среди всех тортов
-            const allCakesByPreference = cakes.filter(preferenceFilter);
-            const budgetFilter = userAnswers.budget ? {
-              'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
-              'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) > 1000
-            }[userAnswers.budget] : () => true;
+            const selectedSweetness = sweetnessMap[userAnswers.sweetness];
+            const selectedPreference = userAnswers.preference;
             
-            filteredCakes = allCakesByPreference.filter(cake => budgetFilter(cake.price));
+            // Проверяем конфликт
+            if (selectedSweetness.includes('cheesecake') && selectedPreference === 'Мед') hasConflict = true;
+            if (selectedSweetness.includes('mousse') && selectedPreference === 'Мед') hasConflict = true;
+            if (selectedSweetness.includes('fruit') && selectedPreference === 'Шоколад') hasConflict = true;
+            if (selectedSweetness.includes('classic') && selectedPreference === 'Шоколад') hasConflict = true;
+            if (selectedSweetness.includes('chocolate') && selectedPreference === 'Мусс') hasConflict = true;
+            if (selectedSweetness.includes('honey') && selectedPreference === 'Мусс') hasConflict = true;
             
-            // Отладочная информация
-            console.log('🔍 КОНФЛИКТ ОБНАРУЖЕН!');
-            console.log('📋 Все торты по предпочтению:', allCakesByPreference);
-            console.log('💰 После фильтрации по бюджету:', filteredCakes);
-            console.log('🎯 Итоговые торты:', filteredCakes);
+            if (hasConflict) {
+              explanation = `💡 Вы выбрали "${userAnswers.sweetness.toLowerCase()}", но предпочли "${userAnswers.preference.toLowerCase()}". Я приоритет отдал вашему предпочтению, так как это более конкретный выбор!`;
+              
+              // При конфликте игнорируем фильтрацию по сладости и ищем торты по предпочтениям среди всех тортов
+              const allCakesByPreference = cakes.filter(preferenceFilter);
+              const budgetFilter = userAnswers.budget ? {
+                'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
+                'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1000
+              }[userAnswers.budget] : () => true;
+              
+              filteredCakes = allCakesByPreference.filter(cake => budgetFilter(cake.price));
+              
+              // Отладочная информация
+              console.log('🔍 КОНФЛИКТ ОБНАРУЖЕН!');
+              console.log('📋 Все торты по предпочтению:', allCakesByPreference);
+              console.log('💰 После фильтрации по бюджету:', filteredCakes);
+              console.log('🎯 Итоговые торты:', filteredCakes);
+            } else {
+              console.log('✅ Конфликт НЕ обнаружен');
+              // Нет конфликта - применяем обычную фильтрацию
+              const preferenceCakes = filteredCakes.filter(preferenceFilter);
+              if (preferenceCakes.length > 0) {
+                filteredCakes = preferenceCakes;
+              }
+              console.log('📋 Торты после обычной фильтрации:', filteredCakes);
+            }
           } else {
-            console.log('✅ Конфликт НЕ обнаружен');
-            // Нет конфликта - применяем обычную фильтрацию
+            // Нет выбора сладости - просто фильтруем по предпочтениям
             const preferenceCakes = filteredCakes.filter(preferenceFilter);
             if (preferenceCakes.length > 0) {
               filteredCakes = preferenceCakes;
             }
-            console.log('📋 Торты после обычной фильтрации:', filteredCakes);
-          }
-        } else {
-          // Нет выбора сладости - просто фильтруем по предпочтениям
-          const preferenceCakes = filteredCakes.filter(preferenceFilter);
-          if (preferenceCakes.length > 0) {
-            filteredCakes = preferenceCakes;
           }
         }
       }
@@ -439,7 +449,7 @@ function App() {
     if (filteredCakes.length < 3) {
       const budgetFilter = userAnswers.budget ? {
         'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
-        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) > 1000
+        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1000
       }[userAnswers.budget] : () => true;
 
       const popularCakes = cakes.filter(cake => 
@@ -457,7 +467,7 @@ function App() {
     if (filteredCakes.length < 3) {
       const budgetFilter = userAnswers.budget ? {
         'До 1000 ₽': price => parseInt(price.match(/\d+/)[0]) <= 1000,
-        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) > 1000
+        'От 1000 ₽': price => parseInt(price.match(/\d+/)[0]) >= 1000
       }[userAnswers.budget] : () => true;
 
       const remainingCakes = cakes.filter(cake => 
