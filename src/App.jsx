@@ -293,6 +293,9 @@ function App() {
   const generateRecommendations = () => {
     let filteredCakes = [...cakes];
     let explanation = '';
+    
+    // Отладочная информация
+    console.log('Ответы пользователя:', userAnswers);
 
     // Фильтрация по бюджету
     if (userAnswers.budget) {
@@ -407,12 +410,20 @@ function App() {
             }[userAnswers.budget] : () => true;
             
             filteredCakes = allCakesByPreference.filter(cake => budgetFilter(cake.price));
+            
+            // Отладочная информация
+            console.log('🔍 КОНФЛИКТ ОБНАРУЖЕН!');
+            console.log('📋 Все торты по предпочтению:', allCakesByPreference);
+            console.log('💰 После фильтрации по бюджету:', filteredCakes);
+            console.log('🎯 Итоговые торты:', filteredCakes);
           } else {
+            console.log('✅ Конфликт НЕ обнаружен');
             // Нет конфликта - применяем обычную фильтрацию
             const preferenceCakes = filteredCakes.filter(preferenceFilter);
             if (preferenceCakes.length > 0) {
               filteredCakes = preferenceCakes;
             }
+            console.log('📋 Торты после обычной фильтрации:', filteredCakes);
           }
         } else {
           // Нет выбора сладости - просто фильтруем по предпочтениям
