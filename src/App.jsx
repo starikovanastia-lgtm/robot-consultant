@@ -344,9 +344,9 @@ function App() {
     // Фильтрация по уровню сладости (если указан)
     if (userAnswers.sweetness) {
       const sweetnessMap = {
-        'Не очень сладкий': cake => cake.category === 'cheesecake' || cake.category === 'classic', // Менее сладкие
-        'Умеренно сладкий': cake => cake.category === 'honey' || cake.category === 'fruit', // Средняя сладость
-        'Очень сладкий': cake => cake.category === 'chocolate' || cake.category === 'mousse' // Очень сладкие
+        'Не очень сладкий': cake => cake.category === 'cheesecake' || cake.category === 'mousse', // Менее сладкие
+        'Умеренно сладкий': cake => cake.category === 'fruit' || cake.category === 'classic', // Средняя сладость
+        'Очень сладкий': cake => cake.category === 'chocolate' || cake.category === 'honey' // Очень сладкие
       };
       const sweetnessFilter = sweetnessMap[userAnswers.sweetness];
       if (sweetnessFilter) {
