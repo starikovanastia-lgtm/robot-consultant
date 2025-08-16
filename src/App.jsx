@@ -271,10 +271,16 @@ function App() {
     } else {
       // Показываем рекомендации
       setTimeout(() => {
-        const recommendations = generateRecommendations();
+        const { recommendations, explanation } = generateRecommendations();
+        let responseText = `Спасибо за ответы! 🎯 Я подобрал для вас идеальные торты на основе ваших предпочтений:`;
+        
+        if (explanation) {
+          responseText += `\n\n${explanation}`;
+        }
+        
         const botResponse = {
           type: 'bot',
-          text: `Спасибо за ответы! 🎯 Я подобрал для вас идеальные торты на основе ваших предпочтений:`,
+          text: responseText,
           recommendations: recommendations
         };
         setMessages(prev => [...prev, botResponse]);
@@ -286,6 +292,7 @@ function App() {
 
   const generateRecommendations = () => {
     let filteredCakes = [...cakes];
+    let explanation = '';
 
     // Фильтрация по бюджету
     if (userAnswers.budget) {
@@ -359,7 +366,7 @@ function App() {
       }
     }
 
-    // Фильтрация по предпочтениям
+    // Фильтрация по предпочтениям (приоритет последнему выбору)
     if (userAnswers.preference) {
       const preferenceMap = {
         'Шоколад': cake => cake.category === 'chocolate',
@@ -370,7 +377,33 @@ function App() {
       const preferenceFilter = preferenceMap[userAnswers.preference];
       if (preferenceFilter) {
         const preferenceCakes = filteredCakes.filter(preferenceFilter);
-        // Если есть торты по предпочтениям, используем их
+        
+        // Проверяем конфликт между сладостью и предпочтениями
+        if (userAnswers.sweetness && preferenceCakes.length > 0) {
+          const sweetnessMap = {
+            'Не очень сладкий': ['cheesecake', 'mousse'],
+            'Умеренно сладкий': ['fruit', 'classic'],
+            'Очень сладкий': ['chocolate', 'honey']
+          };
+          
+          const selectedSweetness = sweetnessMap[userAnswers.sweetness];
+          const selectedPreference = userAnswers.preference;
+          
+          // Проверяем конфликт
+          let hasConflict = false;
+          if (selectedSweetness.includes('cheesecake') && selectedPreference === 'Мед') hasConflict = true;
+          if (selectedSweetness.includes('mousse') && selectedPreference === 'Мед') hasConflict = true;
+          if (selectedSweetness.includes('fruit') && selectedPreference === 'Шоколад') hasConflict = true;
+          if (selectedSweetness.includes('classic') && selectedPreference === 'Шоколад') hasConflict = true;
+          if (selectedSweetness.includes('chocolate') && selectedPreference === 'Мусс') hasConflict = true;
+          if (selectedSweetness.includes('honey') && selectedPreference === 'Мусс') hasConflict = true;
+          
+          if (hasConflict) {
+            explanation = `💡 Вы выбрали "${userAnswers.sweetness.toLowerCase()}", но предпочли "${userAnswers.preference.toLowerCase()}". Я приоритет отдал вашему предпочтению, так как это более конкретный выбор!`;
+          }
+        }
+        
+        // Если есть торты по предпочтениям, используем их (приоритет)
         if (preferenceCakes.length > 0) {
           filteredCakes = preferenceCakes;
         }
@@ -429,7 +462,10 @@ function App() {
       return priceA - priceB;
     });
 
-    return filteredCakes.slice(0, 3);
+    return {
+      recommendations: filteredCakes.slice(0, 3),
+      explanation: explanation
+    };
   };
 
   const resetChat = () => {
